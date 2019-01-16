@@ -8,12 +8,13 @@ var contributorsNames = [];
 var url = `https://api.github.com/repos/${repoOwner}/${repoName}/contributors`;
 
 
+
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
-    url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",;
+    url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
-      'Authorization': `token ${secrets.GITHUB_TOKEN}`,;
-      'User-Agent': 'trabnett';
+      'Authorization': `token ${secrets.GITHUB_TOKEN}`,
+      'User-Agent': 'trabnett'
     }
   }
   request.get(options, function(err, res, body){
@@ -22,18 +23,17 @@ function getRepoContributors(repoOwner, repoName, cb) {
 };
 
 var logStuff = function(err, body) {
-  var data = JSON.parse(body);
-  data.forEach(function(user) {
-    downloadImageByURL(user.avatar_url, `avatars/${user.login}.jpg` );
-  })
-};
+  var data = JSON.parse(body)
+  console.log(data)
+}
+
 
 function downloadImageByURL(url, filePath) {
-    request.get(url);
+    request.get(url)
       .pipe(fs.createWriteStream(filePath));
 }
 
-getRepoContributors(repoOwner,repoName,logStuff);
+getRepoContributors(repoOwner,repoName,logStuff)
 
 
 
